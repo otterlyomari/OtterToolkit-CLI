@@ -1,0 +1,2 @@
+This name "OtterToolkit" is NOT final, nor are the current contents reflective of the more polished final product
+This name is to be workshopped and refined before pushing to our repository No newline at end of file
