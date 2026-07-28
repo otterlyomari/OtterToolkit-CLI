@@ -91,6 +91,7 @@ function Start-ApplicationManager {
 
 
         if (
+            $Choice -eq "Back" -or
             $Choice -eq "Exit" -or
             $Choice -eq "4"
         ) {
@@ -210,7 +211,17 @@ function Show-ApplicationSearch {
 
 
 
+$Settings =
+Get-ToolkitSettings
+
+
+if (
+    $Settings.Interface.ClearScreen
+){
+
     Clear-Host
+
+}
 
 
     Write-Host "Search Results"
@@ -298,7 +309,17 @@ param(
 
 
 
-Clear-Host
+$Settings =
+Get-ToolkitSettings
+
+
+if (
+    $Settings.Interface.ClearScreen
+){
+
+    Clear-Host
+
+}
 
 
 
@@ -356,7 +377,17 @@ Pause
 function Show-InstalledApplications {
 
 
-Clear-Host
+$Settings =
+Get-ToolkitSettings
+
+
+if (
+    $Settings.Interface.ClearScreen
+){
+
+    Clear-Host
+
+}
 
 
 Write-ToolkitInfo `
@@ -389,8 +420,17 @@ Pause
 
 function Show-PackageManagers {
 
+$Settings =
+Get-ToolkitSettings
 
-Clear-Host
+
+if (
+    $Settings.Interface.ClearScreen
+){
+
+    Clear-Host
+
+}
 
 
 Write-Host "Package Managers"

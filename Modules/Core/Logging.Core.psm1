@@ -177,7 +177,7 @@ function Start-ToolkitSession {
 
 
     Write-ToolkitInfo `
-        "WindowsToolkit session started"
+        "Otter Toolkit session started"
 
 
     Write-ToolkitInfo `

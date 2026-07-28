@@ -1,0 +1,294 @@
+[
+  {
+    "Name": "Enable High Performance Power Plan",
+    "Category": "Power",
+    "Description": "Activates the Windows High Performance power plan.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "/setactive SCHEME_MIN"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Ultimate Performance Power Plan",
+    "Category": "Power",
+    "Description": "Activates the Windows Ultimate Performance power plan for maximum performance.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "-duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable Sleep Timeout",
+    "Category": "Power",
+    "Description": "Prevents Windows from automatically entering sleep mode.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "/change standby-timeout-ac 0"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable Hibernate",
+    "Category": "Power",
+    "Description": "Disables Windows hibernation and removes the hibernation file.",
+    "Reversible": true,
+
+    "Check": {
+      "Type": "Command",
+      "Command": "powercfg",
+      "Arguments": "/a",
+      "ExpectedValue": "Hibernate"
+    },
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "/hibernate off"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "/hibernate on"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Hibernate",
+    "Category": "Power",
+    "Description": "Enables Windows hibernation support.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "/hibernate on"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "/hibernate off"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable USB Selective Suspend",
+    "Category": "Power",
+    "Description": "Prevents Windows from suspending USB devices to save power.",
+    "Reversible": true,
+
+    "Check": {
+      "Type": "Registry",
+      "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\USB",
+      "Name": "DisableSelectiveSuspend",
+      "ExpectedValue": 1
+    },
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\USB",
+        "Name": "DisableSelectiveSuspend",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\USB",
+        "Name": "DisableSelectiveSuspend",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable PCI Express Link State Power Management",
+    "Category": "Power",
+    "Description": "Disables PCIe power saving features that may impact latency.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_PCIEXPRESS ASPM 0"
+      },
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "-S SCHEME_CURRENT"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable CPU Performance Mode",
+    "Category": "Power",
+    "Description": "Sets Windows processor power management to prioritize performance.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_PROCESSOR PROCTHROTTLEMIN 100"
+      },
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "-S SCHEME_CURRENT"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable Fast Startup",
+    "Category": "Power",
+    "Description": "Disables Windows Fast Startup to allow full shutdowns.",
+    "Reversible": true,
+
+    "Check": {
+      "Type": "Registry",
+      "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+      "Name": "HiberbootEnabled",
+      "ExpectedValue": 0
+    },
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+        "Name": "HiberbootEnabled",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+        "Name": "HiberbootEnabled",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Fast Startup",
+    "Category": "Power",
+    "Description": "Enables Windows Fast Startup for faster boot times.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+        "Name": "HiberbootEnabled",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+        "Name": "HiberbootEnabled",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable Modern Standby",
+    "Category": "Power",
+    "Description": "Disables Modern Standby on supported systems.",
+    "Reversible": true,
+
+    "Check": {
+      "Type": "Registry",
+      "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+      "Name": "PlatformAoAcOverride",
+      "ExpectedValue": 0
+    },
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+        "Name": "PlatformAoAcOverride",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+        "Name": "PlatformAoAcOverride",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Wake Timers",
+    "Category": "Power",
+    "Description": "Allows Windows scheduled tasks to wake the computer.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powercfg",
+        "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_SLEEP RTCWAKE 1"
+      }
+    ]
+  }
+]

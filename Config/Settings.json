@@ -1,0 +1,20 @@
+{
+  "Version": "0.2.0-beta",
+  "FirstRunComplete": true,
+  "Appearance": {
+    "Animations": true,
+    "AccentColor": "Cyan",
+    "Theme": "Dark"
+  },
+  "Accessibility": {
+    "HighContrast": false,
+    "ReduceMotion": false,
+    "ShowDescriptions": true,
+    "VerboseOutput": false
+  },
+  "Interface": {
+    "ConfirmActions": true,
+    "RememberPosition": true,
+    "PageSize": 10
+  }
+}

@@ -1,0 +1,132 @@
+[
+  {
+    "Name": "Enable TCP Window Auto-Tuning",
+    "Description": "Restores Windows TCP receive window auto-tuning for improved network performance.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters",
+        "Name": "EnableTCPChimney",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Enable Network Discovery",
+    "Description": "Enables Windows network discovery features.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Dnscache\\Parameters",
+        "Name": "EnableMulticast",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Disable Network Throttling",
+    "Description": "Removes Windows multimedia network throttling behavior that can affect latency-sensitive applications.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+        "Name": "NetworkThrottlingIndex",
+        "Value": 4294967295,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Optimize Gaming Network Response",
+    "Description": "Adjusts Windows multimedia scheduling settings for latency-sensitive applications.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+        "Name": "SystemResponsiveness",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Enable DNS Cache",
+    "Description": "Ensures Windows DNS caching remains enabled for faster domain lookups.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Dnscache",
+        "Name": "Start",
+        "Value": 2,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Disable IPv6 Transition Technologies",
+    "Description": "Disables unused IPv6 transition mechanisms that may cause connectivity issues on some networks.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+        "Name": "DisabledComponents",
+        "Value": 16,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Enable SMB Direct",
+    "Description": "Enables SMB Direct support for compatible high-performance network adapters.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters",
+        "Name": "EnableSMBDirect",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Disable Windows Network Location Checks",
+    "Description": "Prevents Windows from repeatedly checking network connectivity status.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\NlaSvc\\Parameters\\Internet",
+        "Name": "EnableActiveProbing",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Enable QoS Packet Scheduler",
+    "Description": "Ensures Windows QoS packet scheduling remains available.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Psched",
+        "Name": "Start",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Disable Teredo Tunneling",
+    "Description": "Disables Teredo IPv6 tunneling when it is not required.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+        "Name": "DisabledComponents",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  }
+]

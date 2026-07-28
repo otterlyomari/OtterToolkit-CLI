@@ -1,0 +1,166 @@
+[
+  {
+    "Name": "Run Disk Cleanup",
+    "Description": "Runs Windows Disk Cleanup with automatic cleanup selections.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "cleanmgr",
+        "Arguments": "/verylowdisk"
+      }
+    ]
+  },
+  {
+    "Name": "Clear Temporary Files",
+    "Description": "Removes temporary files from the Windows and user temp directories.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powershell",
+        "Arguments": "-Command Remove-Item -Path $env:TEMP\\* -Recurse -Force -ErrorAction SilentlyContinue"
+      }
+    ]
+  },
+  {
+    "Name": "Clear Windows Update Cache",
+    "Description": "Clears the Windows Update download cache.",
+    "Actions": [
+      {
+        "Type": "Service",
+        "Name": "wuauserv",
+        "StartupType": "Stopped"
+      },
+      {
+        "Type": "Command",
+        "Command": "powershell",
+        "Arguments": "-Command Remove-Item C:\\Windows\\SoftwareDistribution\\Download\\* -Recurse -Force -ErrorAction SilentlyContinue"
+      },
+      {
+        "Type": "Service",
+        "Name": "wuauserv",
+        "StartupType": "Automatic"
+      }
+    ]
+  },
+  {
+    "Name": "Repair Windows Component Store",
+    "Description": "Uses DISM to repair Windows component corruption.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "DISM",
+        "Arguments": "/Online /Cleanup-Image /RestoreHealth"
+      }
+    ]
+  },
+  {
+    "Name": "Scan Windows System Files",
+    "Description": "Runs System File Checker to repair corrupted Windows files.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "sfc",
+        "Arguments": "/scannow"
+      }
+    ]
+  },
+  {
+    "Name": "Optimize Storage Drives",
+    "Description": "Runs Windows drive optimization on connected drives.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "defrag",
+        "Arguments": "/C /O"
+      }
+    ]
+  },
+  {
+    "Name": "Enable Storage Sense",
+    "Description": "Enables Windows automatic storage cleanup.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
+        "Name": "01",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Disable Storage Sense",
+    "Description": "Disables Windows automatic storage cleanup.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
+        "Name": "01",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Reset Windows Network Stack",
+    "Description": "Resets Windows TCP/IP and Winsock configuration.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "netsh",
+        "Arguments": "winsock reset"
+      },
+      {
+        "Type": "Command",
+        "Command": "netsh",
+        "Arguments": "int ip reset"
+      }
+    ]
+  },
+  {
+    "Name": "Flush DNS Cache",
+    "Description": "Clears the Windows DNS resolver cache.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "ipconfig",
+        "Arguments": "/flushdns"
+      }
+    ]
+  },
+  {
+    "Name": "Rebuild Windows Search Index",
+    "Description": "Rebuilds the Windows Search index database.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powershell",
+        "Arguments": "-Command Start-Process control.exe -ArgumentList 'srchadmin.dll' "
+      }
+    ]
+  },
+  {
+    "Name": "Enable Automatic Windows Updates",
+    "Description": "Restores automatic Windows Update behavior.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+        "Name": "NoAutoUpdate",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+  {
+    "Name": "Create Restore Point",
+    "Description": "Creates a Windows System Restore checkpoint.",
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powershell",
+        "Arguments": "-Command Checkpoint-Computer -Description 'OtterToolkit Restore Point' -RestorePointType MODIFY_SETTINGS"
+      }
+    ]
+  }
+]

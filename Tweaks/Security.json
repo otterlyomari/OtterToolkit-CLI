@@ -1,0 +1,366 @@
+[
+  {
+    "Name": "Enable Windows Firewall",
+    "Category": "Security",
+    "Description": "Enables Windows Defender Firewall for all network profiles.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "netsh",
+        "Arguments": "advfirewall set allprofiles state on"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Command",
+        "Command": "netsh",
+        "Arguments": "advfirewall set allprofiles state off"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable User Account Control",
+    "Category": "Security",
+    "Description": "Enables Windows User Account Control prompts.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "EnableLUA",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "EnableLUA",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Require Secure UAC Desktop",
+    "Category": "Security",
+    "Description": "Forces UAC prompts to appear on the secure desktop.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "PromptOnSecureDesktop",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "PromptOnSecureDesktop",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Windows Defender Real-Time Protection",
+    "Category": "Security",
+    "Description": "Enables Microsoft Defender real-time malware protection.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powershell",
+        "Arguments": "-Command Set-MpPreference -DisableRealtimeMonitoring $false"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Command",
+        "Command": "powershell",
+        "Arguments": "-Command Set-MpPreference -DisableRealtimeMonitoring $true"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Windows Defender Cloud Protection",
+    "Category": "Security",
+    "Description": "Enables cloud-based protection for Microsoft Defender.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "powershell",
+        "Arguments": "-Command Set-MpPreference -MAPSReporting Advanced"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Command",
+        "Command": "powershell",
+        "Arguments": "-Command Set-MpPreference -MAPSReporting Disabled"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Windows SmartScreen",
+    "Category": "Security",
+    "Description": "Enables Windows SmartScreen application reputation checks.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+        "Name": "SmartScreenEnabled",
+        "Value": "RequireAdmin",
+        "Kind": "String"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+        "Name": "SmartScreenEnabled",
+        "Value": "Off",
+        "Kind": "String"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable SMBv1",
+    "Category": "Security",
+    "Description": "Disables the legacy SMBv1 file sharing protocol.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "dism",
+        "Arguments": "/Online /Disable-Feature /FeatureName:SMB1Protocol /NoRestart"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Secure Sign-In",
+    "Category": "Security",
+    "Description": "Requires users to press CTRL+ALT+DEL before signing in.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "DisableCAD",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        "Name": "DisableCAD",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable Anonymous Network Access",
+    "Category": "Security",
+    "Description": "Prevents anonymous users from accessing Windows resources.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+        "Name": "RestrictAnonymous",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+        "Name": "RestrictAnonymous",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable LSASS Protection",
+    "Category": "Security",
+    "Description": "Enables additional protection for the Local Security Authority process.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+        "Name": "RunAsPPL",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa",
+        "Name": "RunAsPPL",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable Remote Registry Service",
+    "Category": "Security",
+    "Description": "Disables the Remote Registry service to reduce attack surface.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Service",
+        "Name": "RemoteRegistry",
+        "StartupType": "Disabled"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Service",
+        "Name": "RemoteRegistry",
+        "StartupType": "Manual"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable Remote Assistance",
+    "Category": "Security",
+    "Description": "Disables Windows Remote Assistance connections.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Remote Assistance",
+        "Name": "fAllowToGetHelp",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Remote Assistance",
+        "Name": "fAllowToGetHelp",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable DEP",
+    "Category": "Security",
+    "Description": "Enables Data Execution Prevention for Windows components.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "bcdedit",
+        "Arguments": "/set nx OptOut"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Disable Guest Account",
+    "Category": "Security",
+    "Description": "Disables the built-in Windows Guest account.",
+    "Reversible": true,
+
+    "Actions": [
+      {
+        "Type": "Command",
+        "Command": "net",
+        "Arguments": "user Guest /active:no"
+      }
+    ],
+
+    "UndoActions": [
+      {
+        "Type": "Command",
+        "Command": "net",
+        "Arguments": "user Guest /active:yes"
+      }
+    ]
+  },
+
+
+  {
+    "Name": "Enable Defender Tamper Protection",
+    "Category": "Security",
+    "Description": "Enables Microsoft Defender tamper protection.",
+    "Reversible": false,
+
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows Defender\\Features",
+        "Name": "TamperProtection",
+        "Value": 5,
+        "Kind": "DWord"
+      }
+    ]
+  }
+]

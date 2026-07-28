@@ -1,16 +1,2347 @@
 [
-  {
-    "Name": "Disable Power Throttling",
-    "Category": "Performance",
-    "Description": "Disables Windows power throttling behavior.",
-    "Actions": [
-      {
-        "Type": "Registry",
-        "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
-        "Name": "PowerThrottlingOff",
-        "Value": 1,
-        "Kind": "DWord"
-      }
-    ]
-  }
+    {
+        "Name": "Disable Power Throttling",
+        "Category": "Performance",
+        "Description": "Disables Windows power throttling behavior for applications.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Check": {
+            "Type": "Registry",
+            "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+            "Name": "PowerThrottlingOff",
+            "ExpectedValue": 1
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+                "Name": "PowerThrottlingOff",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+                "Name": "PowerThrottlingOff",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Hardware Accelerated GPU Scheduling",
+        "Category": "Performance",
+        "Description": "Enables Windows Hardware Accelerated GPU Scheduling.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Check": {
+            "Type": "Registry",
+            "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+            "Name": "HwSchMode",
+            "ExpectedValue": 2
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Multi Plane Overlay",
+        "Category": "Performance",
+        "Description": "Disables Windows MPO which may fix GPU flickering and stuttering issues.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Dwm",
+                "Name": "OverlayTestMode",
+                "Value": 5,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Dwm",
+                "Name": "OverlayTestMode",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Startup Delay",
+        "Category": "Performance",
+        "Description": "Removes Windows startup delay applied to desktop applications.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize",
+                "Name": "StartupDelayInMSec",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize",
+                "Name": "StartupDelayInMSec",
+                "Value": 20000,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize Menu Response Time",
+        "Category": "Performance",
+        "Description": "Reduces Windows menu opening delay.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Control Panel\\Desktop",
+                "Name": "MenuShowDelay",
+                "Value": "0",
+                "Kind": "String"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Control Panel\\Desktop",
+                "Name": "MenuShowDelay",
+                "Value": "400",
+                "Kind": "String"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Visual Effects",
+        "Category": "Performance",
+        "Description": "Prioritizes performance over Windows animations.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
+                "Name": "VisualFXSetting",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
+                "Name": "VisualFXSetting",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Long File Paths",
+        "Category": "Performance",
+        "Description": "Allows applications to use paths longer than 260 characters.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+                "Name": "LongPathsEnabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+                "Name": "LongPathsEnabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Xbox Background Services",
+        "Category": "Performance",
+        "Description": "Disables Xbox services that may run background processes.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Service",
+                "Name": "XblGameSave",
+                "StartupType": "Disabled"
+            },
+            {
+                "Type": "Service",
+                "Name": "XboxGipSvc",
+                "StartupType": "Disabled"
+            },
+            {
+                "Type": "Service",
+                "Name": "XboxNetApiSvc",
+                "StartupType": "Disabled"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Service",
+                "Name": "XblGameSave",
+                "StartupType": "Manual"
+            },
+            {
+                "Type": "Service",
+                "Name": "XboxGipSvc",
+                "StartupType": "Manual"
+            },
+            {
+                "Type": "Service",
+                "Name": "XboxNetApiSvc",
+                "StartupType": "Manual"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Game DVR",
+        "Category": "Performance",
+        "Description": "Disables Windows background game recording.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\System\\GameConfigStore",
+                "Name": "GameDVR_Enabled",
+                "Value": 0,
+                "Kind": "DWord"
+            },
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                "Name": "AppCaptureEnabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\System\\GameConfigStore",
+                "Name": "GameDVR_Enabled",
+                "Value": 1,
+                "Kind": "DWord"
+            },
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                "Name": "AppCaptureEnabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "NVIDIA Prefer Maximum Performance",
+        "Category": "Performance",
+        "Description": "Enables NVIDIA maximum performance power policy.",
+        "Reversible": false,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "nvidia-smi",
+                "Arguments": "-pm 1"
+            }
+        ]
+    },
+    {
+        "Name": "NVIDIA Increase Shader Cache Size",
+        "Category": "Performance",
+        "Description": "Increases NVIDIA shader cache size to reduce shader compilation stutter.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCacheSize",
+                "Value": 4294967295,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCacheSize",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "AMD Disable ULPS",
+        "Category": "Performance",
+        "Description": "Disables AMD Ultra Low Power State for improved consistency.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Class",
+                "Name": "EnableUlps",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Class",
+                "Name": "EnableUlps",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "AMD Shader Cache Optimization",
+        "Category": "Performance",
+        "Description": "Allows AMD systems to use a larger shader cache.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCacheSize",
+                "Value": 4294967295,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCacheSize",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Intel Integrated Graphics Performance Mode",
+        "Category": "Performance",
+        "Description": "Adjusts Intel graphics scheduling toward performance.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "Intel",
+            "IntegratedGPU": true
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "AMD Integrated Radeon Performance Mode",
+        "Category": "Performance",
+        "Description": "Enables performance-oriented GPU scheduling for integrated Radeon graphics.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "AMD",
+            "IntegratedGPU": true
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable AMD Ryzen Performance Scheduling",
+        "Category": "Performance",
+        "Description": "Optimizes Windows scheduling behavior for AMD Ryzen processors.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "CPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+                "Name": "Win32PrioritySeparation",
+                "Value": 38,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+                "Name": "Win32PrioritySeparation",
+                "Value": 26,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Intel Performance Scheduling",
+        "Category": "Performance",
+        "Description": "Optimizes Windows foreground application scheduling for Intel CPUs.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "CPUVendor": "Intel"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+                "Name": "Win32PrioritySeparation",
+                "Value": 38,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+                "Name": "Win32PrioritySeparation",
+                "Value": 26,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable CPU Idle Throttling",
+        "Category": "Performance",
+        "Description": "Reduces aggressive CPU idle power management.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "HibernateEnabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "HibernateEnabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable NVMe Optimization",
+        "Category": "Performance",
+        "Description": "Applies storage optimizations for NVMe drives.",
+        "Reversible": false,
+        "RestartRequired": true,
+        "Requirements": {
+            "HasNVMe": true
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "fsutil",
+                "Arguments": "behavior set disabledeletenotify 0"
+            }
+        ]
+    },
+    {
+        "Name": "Enable SSD TRIM",
+        "Category": "Performance",
+        "Description": "Ensures SSD TRIM support is enabled.",
+        "Reversible": false,
+        "RestartRequired": false,
+        "Requirements": {
+            "HasSSD": true
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "fsutil",
+                "Arguments": "behavior set disabledeletenotify 0"
+            }
+        ]
+    },
+    {
+        "Name": "Disable NTFS Last Access Updates",
+        "Category": "Performance",
+        "Description": "Stops NTFS from updating access timestamps to reduce writes.",
+        "Reversible": false,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "fsutil",
+                "Arguments": "behavior set disablelastaccess 1"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Memory Compression",
+        "Category": "Performance",
+        "Description": "Enables Windows memory compression for improved multitasking.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powershell",
+                "Arguments": "Enable-MMAgent -MemoryCompression"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powershell",
+                "Arguments": "Disable-MMAgent -MemoryCompression"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Memory Compression",
+        "Category": "Performance",
+        "Description": "Disables Windows memory compression for systems with large amounts of RAM.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "MinimumRAM": 32
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powershell",
+                "Arguments": "Disable-MMAgent -MemoryCompression"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powershell",
+                "Arguments": "Enable-MMAgent -MemoryCompression"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Hibernation",
+        "Category": "Performance",
+        "Description": "Disables hibernation and removes hiberfil.sys.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "/hibernate off"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "/hibernate on"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Fast Startup",
+        "Category": "Performance",
+        "Description": "Disables Windows Fast Startup behavior.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+                "Name": "HiberbootEnabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+                "Name": "HiberbootEnabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable NVIDIA Shader Cache",
+        "Category": "Performance",
+        "Description": "Ensures NVIDIA shader caching is enabled to reduce shader compilation stutter.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCache",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCache",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable NVIDIA Low Latency Mode",
+        "Category": "Performance",
+        "Description": "Enables NVIDIA low latency behavior where supported.",
+        "Reversible": false,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "nvidia-smi",
+                "Arguments": "-lgc 0,0"
+            }
+        ]
+    },
+    {
+        "Name": "Enable AMD Shader Cache",
+        "Category": "Performance",
+        "Description": "Enables shader caching for AMD Radeon GPUs.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCache",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCache",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Intel Graphics Scheduling",
+        "Category": "Performance",
+        "Description": "Enables hardware GPU scheduling on supported Intel graphics.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "Intel"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize GPU Timeout Detection",
+        "Category": "Performance",
+        "Description": "Adjusts Windows GPU timeout detection to reduce crashes during heavy workloads.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "TdrDelay",
+                "Value": 8,
+                "Kind": "DWord"
+            },
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "TdrDdiDelay",
+                "Value": 8,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "TdrDelay",
+                "Value": 2,
+                "Kind": "DWord"
+            },
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "TdrDdiDelay",
+                "Value": 5,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable High Refresh Rate Optimization",
+        "Category": "Performance",
+        "Description": "Optimizes Windows multimedia scheduling for high refresh rate displays.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "Name": "SystemResponsiveness",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "Name": "SystemResponsiveness",
+                "Value": 20,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable USB Selective Suspend",
+        "Category": "Performance",
+        "Description": "Prevents Windows from powering down USB devices.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_usb usbselective 0"
+            },
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setdcvalueindex scheme_current sub_usb usbselective 0"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_usb usbselective 1"
+            },
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setdcvalueindex scheme_current sub_usb usbselective 1"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize Network Gaming Latency",
+        "Category": "Performance",
+        "Description": "Disables multimedia network throttling for latency-sensitive applications.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "Name": "NetworkThrottlingIndex",
+                "Value": 4294967295,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "Name": "NetworkThrottlingIndex",
+                "Value": 10,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize TCP Gaming Responsiveness",
+        "Category": "Performance",
+        "Description": "Adjusts TCP settings for latency-sensitive gaming traffic.",
+        "Reversible": false,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global autotuninglevel=normal"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Game Bar Presence Writer",
+        "Category": "Performance",
+        "Description": "Disables Xbox Game Bar presence detection service.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\GameBar",
+                "Name": "AllowAutoGameMode",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\GameBar",
+                "Name": "AllowAutoGameMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Maximum Performance Power Scheme",
+        "Category": "Performance",
+        "Description": "Sets the active power plan to High Performance.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "/setactive SCHEME_MIN"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "/setactive SCHEME_BALANCED"
+            }
+        ]
+    },
+    {
+        "Name": "Disable PCI Express Link State Power Management",
+        "Category": "Performance",
+        "Description": "Prevents PCIe devices from entering low power states.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_pcie aspm 0"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_pcie aspm 2"
+            }
+        ]
+    },
+    {
+        "Name": "Disable CPU Core Parking",
+        "Category": "Performance",
+        "Description": "Keeps CPU cores available instead of parking idle cores.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "Laptop": false
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_processor CPMINCORES 100"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_processor CPMINCORES 0"
+            }
+        ]
+    },
+    {
+        "Name": "Enable CPU Performance Boost",
+        "Category": "Performance",
+        "Description": "Ensures Windows allows processor boost behavior.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_processor PERFBOOSTMODE 2"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_processor PERFBOOSTMODE 1"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Processor Idle States",
+        "Category": "Performance",
+        "Description": "Reduces CPU idle state transitions for maximum responsiveness.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "Laptop": false
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_processor IDLEDISABLE 1"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex scheme_current sub_processor IDLEDISABLE 0"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Hardware Accelerated GPU Scheduling",
+        "Category": "Performance",
+        "Description": "Enables Windows GPU scheduling improvements.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "MinimumVRAM": 2
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Dynamic Tick",
+        "Category": "Performance",
+        "Description": "Disables Windows dynamic timer behavior for latency-sensitive workloads.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "bcdedit",
+                "Arguments": "/set disabledynamictick yes"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "bcdedit",
+                "Arguments": "/deletevalue disabledynamictick"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Dynamic Tick",
+        "Category": "Performance",
+        "Description": "Restores Windows default dynamic timer behavior.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "bcdedit",
+                "Arguments": "/deletevalue disabledynamictick"
+            }
+        ],
+        "UndoActions": []
+    },
+    {
+        "Name": "Laptop Battery Performance Mode",
+        "Category": "Performance",
+        "Description": "Balances performance and battery usage on laptops.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "Laptop": true
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "/setactive SCHEME_BALANCED"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "/setactive SCHEME_MIN"
+            }
+        ]
+    },
+    {
+        "Name": "Desktop Gaming Power Profile",
+        "Category": "Performance",
+        "Description": "Optimizes desktop systems for sustained gaming workloads.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "Laptop": false
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "/setactive SCHEME_MIN"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "/setactive SCHEME_BALANCED"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Sleep Timeout",
+        "Category": "Performance",
+        "Description": "Prevents the system from sleeping during long workloads.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-change -standby-timeout-ac 0"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-change -standby-timeout-ac 30"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Game Mode",
+        "Category": "Performance",
+        "Description": "Enables Windows Game Mode.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\GameBar",
+                "Name": "AutoGameModeEnabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\GameBar",
+                "Name": "AutoGameModeEnabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Network Adapter Power Saving",
+        "Category": "Performance",
+        "Description": "Prevents Windows from powering down network adapters.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e972-e325-11ce-bfc1-08002be10318}",
+                "Name": "PnPCapabilities",
+                "Value": 24,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e972-e325-11ce-bfc1-08002be10318}",
+                "Name": "PnPCapabilities",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable TCP Receive Side Scaling",
+        "Category": "Performance",
+        "Description": "Enables multi-core packet processing for network adapters.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global rss=enabled"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global rss=disabled"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize TCP Auto Tuning",
+        "Category": "Performance",
+        "Description": "Uses Windows recommended TCP receive window scaling.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global autotuninglevel=normal"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global autotuninglevel=disabled"
+            }
+        ]
+    },
+    {
+        "Name": "Enable TCP Chimney Offload",
+        "Category": "Performance",
+        "Description": "Enables hardware TCP offloading where supported.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global chimney=enabled"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global chimney=disabled"
+            }
+        ]
+    },
+    {
+        "Name": "Disable TCP Timestamps",
+        "Category": "Performance",
+        "Description": "Disables TCP timestamps to reduce packet overhead.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global timestamps=disabled"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "netsh",
+                "Arguments": "interface tcp set global timestamps=enabled"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Game Network Prioritization",
+        "Category": "Performance",
+        "Description": "Prioritizes multimedia applications for lower latency.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "Name": "NetworkThrottlingIndex",
+                "Value": 4294967295,
+                "Kind": "DWord"
+            },
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "Name": "SystemResponsiveness",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "Name": "NetworkThrottlingIndex",
+                "Value": 10,
+                "Kind": "DWord"
+            },
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+                "Name": "SystemResponsiveness",
+                "Value": 20,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize OBS Streaming Performance",
+        "Category": "Performance",
+        "Description": "Prioritizes GPU accelerated workloads for streaming applications.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "MinimumVRAM": 4
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                "Name": "AppCaptureEnabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                "Name": "AppCaptureEnabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Delivery Optimization",
+        "Category": "Performance",
+        "Description": "Stops Windows from using bandwidth for update sharing.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
+                "Name": "DODownloadMode",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
+                "Name": "DODownloadMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Background Network Activity",
+        "Category": "Performance",
+        "Description": "Reduces background Windows network activity.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization",
+                "Name": "DODownloadMode",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization",
+                "Name": "DODownloadMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Developer Build Performance Mode",
+        "Category": "Performance",
+        "Description": "Optimizes Windows settings for development workloads.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+                "Name": "NtfsDisable8dot3NameCreation",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+                "Name": "NtfsDisable8dot3NameCreation",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable SysMain Service",
+        "Category": "Performance",
+        "Description": "Disables SysMain prefetching service. Useful mainly for systems experiencing disk spikes.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Service",
+                "Name": "SysMain",
+                "StartupType": "Disabled"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Service",
+                "Name": "SysMain",
+                "StartupType": "Automatic"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Windows Telemetry",
+        "Category": "Performance",
+        "Description": "Reduces Windows diagnostic data collection services.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Service",
+                "Name": "DiagTrack",
+                "StartupType": "Disabled"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Service",
+                "Name": "DiagTrack",
+                "StartupType": "Automatic"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Windows Error Reporting",
+        "Category": "Performance",
+        "Description": "Disables background crash reporting service.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Service",
+                "Name": "WerSvc",
+                "StartupType": "Disabled"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Service",
+                "Name": "WerSvc",
+                "StartupType": "Manual"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Windows Tips",
+        "Category": "Performance",
+        "Description": "Removes Windows tips and suggestion background activity.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "Name": "SubscribedContent-338388Enabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                "Name": "SubscribedContent-338388Enabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Startup Apps Delay",
+        "Category": "Performance",
+        "Description": "Removes Windows startup delay for applications.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize",
+                "Name": "StartupDelayInMSec",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize",
+                "Name": "StartupDelayInMSec",
+                "Value": 20000,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable OneDrive Startup",
+        "Category": "Performance",
+        "Description": "Prevents OneDrive from automatically launching at startup.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+                "Name": "OneDrive",
+                "Value": "",
+                "Kind": "String"
+            }
+        ],
+        "UndoActions": []
+    },
+    {
+        "Name": "Disable Background Maintenance During Gaming",
+        "Category": "Performance",
+        "Description": "Reduces scheduled maintenance activity during active use.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\Maintenance",
+                "Name": "MaintenanceDisabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\Maintenance",
+                "Name": "MaintenanceDisabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Windows Consumer Features",
+        "Category": "Performance",
+        "Description": "Prevents Windows from installing suggested apps automatically.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+                "Name": "DisableWindowsConsumerFeatures",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+                "Name": "DisableWindowsConsumerFeatures",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Delivery Optimization Peer Sharing",
+        "Category": "Performance",
+        "Description": "Stops Windows Update from sharing updates with other devices.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
+                "Name": "DODownloadMode",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config",
+                "Name": "DODownloadMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Game Focus Mode",
+        "Category": "Performance",
+        "Description": "Reduces notifications and interruptions during gaming.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings",
+                "Name": "NOC_GLOBAL_SETTING_TOASTS_ENABLED",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings",
+                "Name": "NOC_GLOBAL_SETTING_TOASTS_ENABLED",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable NVIDIA MPO",
+        "Category": "Performance",
+        "Description": "Disables Multi-Plane Overlay which can fix flickering, stuttering, and black screen issues on some NVIDIA systems.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Dwm",
+                "Name": "OverlayTestMode",
+                "Value": 5,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\Dwm",
+                "Name": "OverlayTestMode",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable NVIDIA Hardware Scheduling",
+        "Category": "Performance",
+        "Description": "Enables GPU hardware scheduling for NVIDIA graphics cards.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize NVIDIA Driver Responsiveness",
+        "Category": "Performance",
+        "Description": "Adjusts GPU timeout values to prevent driver resets during heavy workloads.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "TdrDelay",
+                "Value": 10,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "TdrDelay",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable AMD Radeon Shader Cache",
+        "Category": "Performance",
+        "Description": "Enables Radeon shader caching to reduce repeated shader compilation.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCache",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "ShaderCache",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable AMD GPU Scheduling",
+        "Category": "Performance",
+        "Description": "Enables Windows hardware GPU scheduling for AMD graphics.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize AMD Radeon Timeout Handling",
+        "Category": "Performance",
+        "Description": "Extends GPU timeout detection for heavy shader workloads.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "TdrDelay",
+                "Value": 10,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "TdrDelay",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Intel GPU Scheduling",
+        "Category": "Performance",
+        "Description": "Enables hardware accelerated GPU scheduling for Intel graphics.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "Intel"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize Intel Integrated Graphics Memory",
+        "Category": "Performance",
+        "Description": "Optimizes shared memory behavior for Intel integrated graphics.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "Intel",
+            "IntegratedGPU": true
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "DedicatedSegmentSize",
+                "Value": 512,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "DedicatedSegmentSize",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Large VRAM Applications",
+        "Category": "Performance",
+        "Description": "Allows applications to better utilize high VRAM GPUs.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "MinimumVRAM": 8
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable AMD Preferred Core Scheduling",
+        "Category": "Performance",
+        "Description": "Allows Windows to prefer AMD favored cores on Ryzen processors.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "CPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "EnergyEstimationEnabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "EnergyEstimationEnabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable AMD CPPC Performance Mode",
+        "Category": "Performance",
+        "Description": "Enables collaborative processor performance control for Ryzen CPUs.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "CPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "PlatformAoAcOverride",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "PlatformAoAcOverride",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Disable Core Parking",
+        "Category": "Performance",
+        "Description": "Prevents Windows from parking CPU cores during workloads.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_PROCESSOR CPMINCORES 100"
+            },
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setactive SCHEME_CURRENT"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_PROCESSOR CPMINCORES 0"
+            },
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setactive SCHEME_CURRENT"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Maximum CPU Performance",
+        "Category": "Performance",
+        "Description": "Sets minimum processor state to maximum performance.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_PROCESSOR PROCTHROTTLEMIN 100"
+            },
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setactive SCHEME_CURRENT"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_PROCESSOR PROCTHROTTLEMIN 5"
+            },
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setactive SCHEME_CURRENT"
+            }
+        ]
+    },
+    {
+        "Name": "Disable CPU Idle States",
+        "Category": "Performance",
+        "Description": "Reduces CPU idle latency by preventing deeper idle states.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "Laptop": false
+        },
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_PROCESSOR IDLEDISABLE 1"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "powercfg",
+                "Arguments": "-setacvalueindex SCHEME_CURRENT SUB_PROCESSOR IDLEDISABLE 0"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Intel Thread Director Support",
+        "Category": "Performance",
+        "Description": "Optimizes scheduling hints for Intel hybrid processors.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "CPUVendor": "Intel"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "EnergyEstimationEnabled",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power",
+                "Name": "EnergyEstimationEnabled",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize Intel Hybrid CPU Scheduling",
+        "Category": "Performance",
+        "Description": "Adjusts Windows scheduling behavior for Intel Performance and Efficiency cores.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "CPUVendor": "Intel"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+                "Name": "Win32PrioritySeparation",
+                "Value": 38,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+                "Name": "Win32PrioritySeparation",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Prioritize Foreground Applications",
+        "Category": "Performance",
+        "Description": "Allocates more scheduling priority to active applications.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+                "Name": "Win32PrioritySeparation",
+                "Value": 38,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl",
+                "Name": "Win32PrioritySeparation",
+                "Value": 26,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable High Precision Event Timer",
+        "Category": "Performance",
+        "Description": "Enables HPET. Useful for troubleshooting timing issues.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Actions": [
+            {
+                "Type": "Command",
+                "Command": "bcdedit",
+                "Arguments": "/set useplatformclock true"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Command",
+                "Command": "bcdedit",
+                "Arguments": "/deletevalue useplatformclock"
+            }
+        ]
+    },
+    {
+        "Name": "Enable NVIDIA Hardware GPU Scheduling Optimization",
+        "Category": "Performance",
+        "Description": "Enables NVIDIA-specific GPU scheduling optimizations when supported.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Check": {
+            "Type": "Registry",
+            "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+            "Name": "HwSchMode",
+            "ExpectedValue": 2
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable NVIDIA Shader Cache",
+        "Category": "Performance",
+        "Description": "Ensures NVIDIA shader caching is enabled to reduce shader compilation stutter.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": "NVIDIA"
+        },
+        "Check": {
+            "Type": "Registry",
+            "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e968-e325-11ce-bfc1-08002be10318}\\0000",
+            "Name": "EnableShaderCache",
+            "ExpectedValue": 1
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e968-e325-11ce-bfc1-08002be10318}\\0000",
+                "Name": "EnableShaderCache",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Class\\{4d36e968-e325-11ce-bfc1-08002be10318}\\0000",
+                "Name": "EnableShaderCache",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable AMD Smart Access Memory",
+        "Category": "Performance",
+        "Description": "Enables Resizable BAR support for AMD graphics systems when supported.",
+        "Reversible": false,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": "AMD"
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "EnableResizableBAR",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Enable Hardware Accelerated GPU Scheduling (AMD/NVIDIA)",
+        "Category": "Performance",
+        "Description": "Enables Windows hardware GPU scheduling on supported dedicated graphics cards.",
+        "Reversible": true,
+        "RestartRequired": true,
+        "Requirements": {
+            "GPUVendor": [
+                "AMD",
+                "NVIDIA"
+            ]
+        },
+        "Check": {
+            "Type": "Registry",
+            "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+            "Name": "HwSchMode",
+            "ExpectedValue": 2
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 2,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "HwSchMode",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Prefer Maximum GPU Performance",
+        "Category": "Performance",
+        "Description": "Prevents Windows from aggressively reducing GPU performance.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Requirements": {
+            "GPUVendor": [
+                "AMD",
+                "NVIDIA"
+            ]
+        },
+        "Check": {
+            "Type": "Registry",
+            "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+            "Name": "PowerMizerEnable",
+            "ExpectedValue": 1
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "PowerMizerEnable",
+                "Value": 1,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                "Name": "PowerMizerEnable",
+                "Value": 0,
+                "Kind": "DWord"
+            }
+        ]
+    },
+    {
+        "Name": "Optimize GPU Priority",
+        "Category": "Performance",
+        "Description": "Prioritizes GPU scheduling for foreground applications.",
+        "Reversible": true,
+        "RestartRequired": false,
+        "Check": {
+            "Type": "Registry",
+            "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+            "Name": "GPU Priority",
+            "ExpectedValue": 8
+        },
+        "Actions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+                "Name": "GPU Priority",
+                "Value": 8,
+                "Kind": "DWord"
+            }
+        ],
+        "UndoActions": [
+            {
+                "Type": "Registry",
+                "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+                "Name": "GPU Priority",
+                "Value": 8,
+                "Kind": "DWord"
+            }
+        ]
+    }
 ]

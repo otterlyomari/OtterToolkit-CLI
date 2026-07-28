@@ -1,116 +1,173 @@
 #Requires -Version 7.0
 
-<#
-.SYNOPSIS
-OtterToolkit tweak management UI.
+$CorePath = Join-Path $PSScriptRoot "..\Core\Tweaks.Core.psm1"
+$HWPath   = Join-Path $PSScriptRoot "..\Core\Hardware.Core.psm1"
+$UIPath   = Join-Path $PSScriptRoot "Tweaks.UI.psm1"
 
-.DESCRIPTION
-Interactive CLI frontend for applying
-Windows tweaks defined by Tweaks.Core.
-#>
+Import-Module (Resolve-Path $CorePath) -Force
+Import-Module (Resolve-Path $HWPath) -Force
 
+$script:RestartWarningShown = $false
 
-#region Dependencies
-
-$CorePath =
-Join-Path `
-    $PSScriptRoot `
-    "..\Core\Tweaks.Core.psm1"
-
-
-$UIPath =
-Join-Path `
-    $PSScriptRoot `
-    "OtterToolkit.UI.psm1"
-
-
-$CorePath =
-Resolve-Path `
-    $CorePath `
-    -ErrorAction Stop
-
-
-$UIPath =
-Resolve-Path `
-    $UIPath `
-    -ErrorAction Stop
-
-
-Import-Module `
-    $CorePath.Path `
-    -Force
-
-
-Import-Module `
-    $UIPath.Path `
-    -Force
-
-
-#endregion
-
-
-
-#region Main Menu
 
 function Start-TweaksManager {
 
     while ($true) {
 
+        $Categories = Get-ToolkitTweaks
 
-        $Tweaks =
-            Get-ToolkitTweaks
+        $Options = [ordered]@{}
 
+        $Index = 1
 
+        foreach ($Category in $Categories) {
 
-        if (-not $Tweaks) {
-
-            Write-Warning `
-                "No tweaks found."
-
-            Pause
-
-            return
+            $Options["$Index"] = $Category.Name
+            $Index++
 
         }
 
+        $Options["$Index"] = "Back"
+
+        $Choice = Show-ToolkitMenu `
+            -Title "Windows Tweaks" `
+            -Options $Options
 
 
-        $Options =
-            @{}
+        if (
+            $Choice -eq "$Index" -or
+            $Choice -eq "Exit"
+        ) {
+            break
+        }
 
+
+        if ($Choice -match '^\d+$') {
+
+            Show-TweakCategory `
+                -Category $Categories[[int]$Choice - 1]
+
+        }
+
+    }
+
+
+    if (
+        (Test-ToolkitRestartRequired) -and
+        (-not $script:RestartWarningShown)
+    ) {
+
+        Clear-Host
+
+        Write-Host ""
+        Write-Host "================================="
+        Write-Host "⚠ Restart Required"
+        Write-Host "================================="
+        Write-Host ""
+
+        Write-Host "Some changes require a Windows restart."
+
+        Pause
+
+        $script:RestartWarningShown = $true
+
+    }
+
+}
+
+
+function Show-TweakCategory {
+
+    param(
+        $Category
+    )
+
+
+    $Tweaks = $Category.Tweaks
+
+    $PageSize =
+    (Get-ToolkitSettings).Interface.PageSize
+    $Page = 1
+
+
+    while ($true) {
+
+        $TotalPages = [Math]::Ceiling(
+            $Tweaks.Count / $PageSize
+        )
+
+
+        $StartIndex = ($Page - 1) * $PageSize
+
+
+        $PageTweaks = $Tweaks |
+            Select-Object `
+                -Skip $StartIndex `
+                -First $PageSize
+
+
+        $Options = [ordered]@{}
 
         $Index = 1
 
 
+        foreach ($Tweak in $PageTweaks) {
 
-        foreach ($Tweak in $Tweaks) {
+            $Status = Get-ToolkitTweakStatus `
+                -Name $Tweak.Name
+
+
+            $Indicator = if ($Status -eq "Enabled") {
+                "[✓]"
+            }
+            else {
+                "[ ]"
+            }
 
 
             $Options["$Index"] =
-                $Tweak.Name
-
+                "$Indicator $($Tweak.Name)"
 
             $Index++
 
         }
 
 
-
-        $Options["$Index"] =
-            "Back"
-
+        $PreviousIndex = $null
+        $NextIndex = $null
 
 
-        $Choice =
-            Show-ToolkitMenu `
-                -Title "Windows Tweaks" `
-                -Options $Options
+        if ($Page -gt 1) {
+
+            $PreviousIndex = $Index
+            $Options["$Index"] = "Previous Page"
+            $Index++
+
+        }
+
+
+        if ($Page -lt $TotalPages) {
+
+            $NextIndex = $Index
+            $Options["$Index"] = "Next Page"
+            $Index++
+
+        }
+
+
+        $BackIndex = $Index
+        $Options["$Index"] = "Back"
+
+
+        $Choice = Show-ToolkitMenu `
+            -Title "$($Category.Name) Tweaks (Page $Page/$TotalPages)" `
+            -Options $Options
 
 
 
         if (
-            $Choice -eq "Exit" -or
-            $Choice -eq "$Index"
+            $Choice -eq "$BackIndex" -or
+            $Choice -eq "Exit"
         ) {
 
             break
@@ -118,74 +175,74 @@ function Start-TweaksManager {
         }
 
 
-
         if (
-            -not (
-                $Choice -match '^\d+$'
-            )
+            $PreviousIndex -and
+            $Choice -eq "$PreviousIndex"
         ) {
 
+            $Page--
             continue
 
         }
 
 
+        if (
+            $NextIndex -and
+            $Choice -eq "$NextIndex"
+        ) {
 
-        $Selected =
-            $Tweaks[
-                [int]$Choice - 1
-            ]
-
-
-
-        if ($Selected) {
-
-            Show-TweakDetails `
-                -Tweak $Selected
+            $Page++
+            continue
 
         }
 
+
+        if ($Choice -match '^\d+$') {
+
+            $SelectedIndex =
+                $StartIndex + ([int]$Choice - 1)
+
+
+            Show-TweakDetails `
+                -Tweak $Tweaks[$SelectedIndex] `
+                -Category $Category
+
+        }
 
     }
 
 }
 
-#endregion
-
-
-
-#region Details
 
 function Show-TweakDetails {
 
-param(
-
-    [Parameter(Mandatory)]
-
-    $Tweak
-
-)
+    param(
+        $Tweak,
+        $Category
+    )
 
 
-Clear-Host
+    Clear-Host
 
-
-Write-Host ""
-Write-Host "================================="
-Write-Host "            Tweak"
-Write-Host "================================="
-Write-Host ""
-
-
-Write-Host (
-    "Name: {0}" -f
-    $Tweak.Name
-)
-
-
-if ($Tweak.Description) {
 
     Write-Host ""
+    Write-Host "================================="
+    Write-Host "              Tweak"
+    Write-Host "================================="
+    Write-Host ""
+
+
+    Write-Host ("Name: {0}" -f $Tweak.Name)
+
+
+$Settings =
+Get-ToolkitSettings
+
+
+if (
+    $Tweak.Description -and
+    $Settings.Accessibility.ShowDescriptions
+){
 
     Write-Host (
         "Description: {0}" -f
@@ -195,41 +252,76 @@ if ($Tweak.Description) {
 }
 
 
-Write-Host ""
-
-
-$Confirm =
-    Read-Host `
-    "Apply this tweak? (Y/N)"
-
-
-
-if (
-    $Confirm -eq "Y" -or
-    $Confirm -eq "y"
-) {
-
-
-    Invoke-ToolkitTweak `
+    $Status = Get-ToolkitTweakStatus `
         -Name $Tweak.Name
 
 
+    Write-Host ""
+    Write-Host ("Status: {0}" -f $Status)
+
+
+    $Reversible = if ($Tweak.UndoActions) {
+        "Yes"
+    }
+    else {
+        "No"
+    }
+
+
+    Write-Host ("Reversible: {0}" -f $Reversible)
+
+
+    $RestartRequired = if ($Tweak.RestartRequired) {
+        "Yes"
+    }
+    else {
+        "No"
+    }
+
+
+    Write-Host ("Restart Required: {0}" -f $RestartRequired)
 
     Write-Host ""
 
-    Write-Host `
-        "Tweak applied."
+
+    if (
+        $Status -eq "Enabled" -and
+        $Tweak.UndoActions
+    ) {
+
+        $Confirm = Read-Host "Undo this tweak? (Y/N)"
+
+        if ($Confirm -match '^[Yy]$') {
+
+            Invoke-ToolkitTweakUndo `
+                -Name $Tweak.Name
+
+
+            Write-ToolkitSuccess "Rollback complete."
+
+        }
+
+    }
+    else {
+
+        $Confirm = Read-Host "Apply this tweak? (Y/N)"
+
+        if ($Confirm -match '^[Yy]$') {
+
+            Invoke-ToolkitTweak `
+                -Name $Tweak.Name
+
+
+            Write-ToolkitSuccess "Tweak applied."
+
+        }
+
+    }
+
+
+    Pause
 
 }
 
 
-Pause
-
-}
-
-#endregion
-
-
-
-Export-ModuleMember `
--Function *
+Export-ModuleMember -Function *

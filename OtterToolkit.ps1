@@ -13,75 +13,47 @@ the interactive CLI interface.
 
 #region Module Loading
 
-
 $ModulePath =
-Join-Path `
-    $PSScriptRoot `
-    "Modules"
-
+    Join-Path `
+        $PSScriptRoot `
+        "Modules"
 
 
 Get-ChildItem `
-    $ModulePath `
+    -Path $ModulePath `
     -Filter "*.psm1" `
     -Recurse |
 Sort-Object FullName |
 ForEach-Object {
 
-
     Import-Module `
-        $_.FullName `
+        -Name $_.FullName `
         -Force
 
 }
 
-
 #endregion
 
 
 
-#region Startup
-
+#region Environment
 
 Confirm-ToolkitEnvironment
 
-Start-ToolkitSession
+Show-OtterDashboard
 
-
-
-Clear-Host
-
-
-Write-Host ""
-Write-Host "================================="
-Write-Host "        OtterToolkit"
-Write-Host "================================="
-Write-Host ""
-
-
-Write-Host "Windows:"
-Get-WindowsVersion |
-Format-Table
-
-
-Write-Host ""
 Write-ToolkitInfo `
     "Toolkit loaded successfully."
 
-
-
-Pause
-
+Read-Host "Press Enter to continue"
 
 
 #endregion
-
 
 
 #region Main Menu
 
-
-$MainMenu = @{
+$MainMenu = [ordered]@{
 
     "1" = "Windows Tweaks"
 
@@ -102,7 +74,7 @@ while ($true) {
 
     $Selection =
         Show-ToolkitMenu `
-            -Title "Main Menu" `
+            -Title "OtterToolkit" `
             -Options $MainMenu
 
 
@@ -111,12 +83,7 @@ while ($true) {
         $Selection -eq "Exit"
     ) {
 
-        Write-ToolkitInfo `
-            "Toolkit closed."
-
-        # todo: add a 15-25 second delay before calling Clear-Host
-        # commented out temporarily until this todo is finished
-        #Clear-Host
+        Show-OtterExitAnimation
 
         break
 
@@ -133,7 +100,6 @@ while ($true) {
 
         "1" {
 
-
             Start-TweaksManager
 
         }
@@ -146,16 +112,14 @@ while ($true) {
 
         "2" {
 
-
             Start-ApplicationManager
-
 
         }
 
 
 
         #----------------------------------
-        # Windows Components
+        # Components
         #----------------------------------
 
         "3" {
@@ -164,7 +128,7 @@ while ($true) {
             while ($true) {
 
 
-                $ComponentMenu = @{
+                $ComponentMenu = [ordered]@{
 
                     "1" = "List Windows Components"
 
@@ -203,15 +167,15 @@ while ($true) {
 
 
                         Get-ToolkitComponents |
-                        Format-Table `
-                            Name,
-                            State,
-                            Provider `
-                            -AutoSize
-
+                            Format-Table `
+                                Name,
+                                State,
+                                Provider `
+                                -AutoSize
 
 
                         Pause
+
 
                     }
 
@@ -221,17 +185,15 @@ while ($true) {
 
 
                         $Name =
-                            Read-Host `
-                            "Component name"
-
+                            Read-Host "Component name"
 
 
                         Enable-ToolkitComponent `
                             -Name $Name
 
 
-
                         Pause
+
 
                     }
 
@@ -241,17 +203,15 @@ while ($true) {
 
 
                         $Name =
-                            Read-Host `
-                            "Component name"
-
+                            Read-Host "Component name"
 
 
                         Disable-ToolkitComponent `
                             -Name $Name
 
 
-
                         Pause
+
 
                     }
 
@@ -274,8 +234,6 @@ while ($true) {
 
             Start-DiagnosticsManager
 
-            Pause
-
         }
 
 
@@ -286,11 +244,7 @@ while ($true) {
 
         "5" {
 
-
-            Write-Host ""
-            Write-Host "Settings module not loaded yet."
-
-            Pause
+            Show-ToolkitSettings
 
         }
 

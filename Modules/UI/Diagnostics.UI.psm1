@@ -1,4 +1,3 @@
-```powershell
 #Requires -Version 7.0
 
 <#
@@ -376,6 +375,7 @@ while ($true) {
 
 
     if (
+            $Choice -eq "Back" -or
         $Choice -eq "Exit" -or
         $Choice -eq "7"
     ) {
@@ -653,4 +653,3 @@ function Get-ToolkitAdvancedNetworkStatus {
 
 Export-ModuleMember `
 -Function *
-```

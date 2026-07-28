@@ -1,0 +1,1062 @@
+[
+{
+    "Name": "Disable Taskbar Widgets",
+    "Category": "UI",
+    "Description": "Removes the Windows Widgets button from the taskbar.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Check": {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "TaskbarDa",
+        "ExpectedValue": 0
+    },
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarDa",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarDa",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Taskbar Search Box",
+    "Category": "UI",
+    "Description": "Removes the search box from the Windows taskbar.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+            "Name": "SearchboxTaskbarMode",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+            "Name": "SearchboxTaskbarMode",
+            "Value": 2,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Enable Classic Context Menu",
+    "Category": "UI",
+    "Description": "Restores the classic Windows context menu instead of the simplified Windows 11 menu.",
+    "Reversible": true,
+    "RestartRequired": true,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32",
+            "Name": "",
+            "Value": "",
+            "Kind": "String"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}",
+            "Name": "",
+            "Value": "",
+            "Kind": "String"
+        }
+    ]
+},
+
+{
+    "Name": "Show File Extensions",
+    "Category": "UI",
+    "Description": "Always displays file extensions in File Explorer.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "HideFileExt",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "HideFileExt",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Show Hidden Files",
+    "Category": "UI",
+    "Description": "Shows hidden files and folders in File Explorer.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "Hidden",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "Hidden",
+            "Value": 2,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable File Explorer Compact Mode",
+    "Category": "UI",
+    "Description": "Uses standard spacing in File Explorer instead of compact mode.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "UseCompactMode",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "UseCompactMode",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Transparency Effects",
+    "Category": "UI",
+    "Description": "Disables Windows transparency effects for a more solid interface appearance.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Check": {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        "Name": "EnableTransparency",
+        "ExpectedValue": 0
+    },
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+            "Name": "EnableTransparency",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+            "Name": "EnableTransparency",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Window Animations",
+    "Category": "UI",
+    "Description": "Disables Windows animation effects when opening and closing windows.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Check": {
+        "Type": "Registry",
+        "Path": "HKCU:\\Control Panel\\Desktop\\WindowMetrics",
+        "Name": "MinAnimate",
+        "ExpectedValue": "0"
+    },
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Control Panel\\Desktop\\WindowMetrics",
+            "Name": "MinAnimate",
+            "Value": "0",
+            "Kind": "String"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Control Panel\\Desktop\\WindowMetrics",
+            "Name": "MinAnimate",
+            "Value": "1",
+            "Kind": "String"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Snap Assist Suggestions",
+    "Category": "UI",
+    "Description": "Disables Windows suggestions when arranging application windows.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "SnapAssist",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "SnapAssist",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Copilot Button",
+    "Category": "UI",
+    "Description": "Removes the Copilot button from the Windows taskbar.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Check": {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "ShowCopilotButton",
+        "ExpectedValue": 0
+    },
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "ShowCopilotButton",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "ShowCopilotButton",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Start Menu Recommendations",
+    "Category": "UI",
+    "Description": "Reduces recommended content shown in the Windows Start Menu.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "Start_IrisRecommendations",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "Start_IrisRecommendations",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Align Taskbar Left",
+    "Category": "UI",
+    "Description": "Moves Windows 11 taskbar icons to the left side.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarAl",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarAl",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Taskbar Animations",
+    "Category": "UI",
+    "Description": "Disables taskbar animation effects for a faster and more responsive interface.",
+    "Reversible": true,
+    "RestartRequired": false,
+    "Check": {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "TaskbarAnimations",
+        "ExpectedValue": 0
+    },
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarAnimations",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarAnimations",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Enable Detailed File Explorer Status",
+    "Category": "UI",
+    "Description": "Shows more detailed information in File Explorer status areas.",
+    "Reversible": true,
+    "RestartRequired": false,
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "ShowInfoTip",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "ShowInfoTip",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable File Explorer Search Suggestions",
+    "Category": "UI",
+    "Description": "Removes search suggestion history from File Explorer.",
+    "Reversible": true,
+    "RestartRequired": false,
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
+            "Name": "DisableSearchBoxSuggestions",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
+            "Name": "DisableSearchBoxSuggestions",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Recent Files",
+    "Category": "UI",
+    "Description": "Stops Windows from tracking recently opened files.",
+    "Reversible": true,
+    "RestartRequired": false,
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+            "Name": "ShowRecent",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+            "Name": "ShowRecent",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Lock Screen",
+    "Category": "UI",
+    "Description": "Skips the Windows lock screen before sign-in.",
+    "Reversible": true,
+    "RestartRequired": true,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+            "Name": "NoLockScreen",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+            "Name": "NoLockScreen",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Notification Suggestions",
+    "Category": "UI",
+    "Description": "Disables Windows tips, suggestions, and recommendation notifications.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "SubscribedContent-338389Enabled",
+            "Value": 0,
+            "Kind": "DWord"
+        },
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "SubscribedContent-353694Enabled",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "SubscribedContent-338389Enabled",
+            "Value": 1,
+            "Kind": "DWord"
+        },
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "SubscribedContent-353694Enabled",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Start Menu App Suggestions",
+    "Category": "UI",
+    "Description": "Stops Windows from suggesting apps in the Start Menu.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "SubscribedContent-338388Enabled",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "SubscribedContent-338388Enabled",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Activity History",
+    "Category": "UI",
+    "Description": "Stops Windows from storing activity history.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+            "Name": "TailoredExperiencesWithDiagnosticDataEnabled",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+            "Name": "TailoredExperiencesWithDiagnosticDataEnabled",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Open File Explorer To This PC",
+    "Category": "UI",
+    "Description": "Makes File Explorer open to This PC instead of Home.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "LaunchTo",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "LaunchTo",
+            "Value": 2,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Quick Access Recent Items",
+    "Category": "UI",
+    "Description": "Removes recently used files from File Explorer Quick Access.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+            "Name": "ShowRecent",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+            "Name": "ShowRecent",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Shortcut Arrow Overlay",
+    "Category": "UI",
+    "Description": "Removes shortcut arrow overlays from desktop shortcuts.",
+    "Reversible": true,
+    "RestartRequired": true,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons",
+            "Name": "29",
+            "Value": "%windir%\\System32\\shell32.dll,-50",
+            "Kind": "String"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons",
+            "Name": "29",
+            "Value": "",
+            "Kind": "String"
+        }
+    ]
+},
+
+{
+    "Name": "Enable Full Path In Explorer Title Bar",
+    "Category": "UI",
+    "Description": "Shows the complete folder path in File Explorer title bars.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState",
+            "Name": "FullPath",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState",
+            "Name": "FullPath",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Thumbnail Previews",
+    "Category": "UI",
+    "Description": "Disables thumbnail generation and displays file icons instead.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "IconsOnly",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "IconsOnly",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Show Protected Operating System Files",
+    "Category": "UI",
+    "Description": "Allows protected Windows system files to be visible in File Explorer.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "ShowSuperHidden",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "ShowSuperHidden",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Explorer Grouping",
+    "Category": "UI",
+    "Description": "Removes automatic grouping of files in File Explorer folders.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell",
+            "Name": "FolderType",
+            "Value": "NotSpecified",
+            "Kind": "String"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell",
+            "Name": "FolderType",
+            "Value": "",
+            "Kind": "String"
+        }
+    ]
+},
+
+{
+    "Name": "Enable File Explorer Details Pane",
+    "Category": "UI",
+    "Description": "Shows the details pane in File Explorer.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Modules\\GlobalSettings\\Sizer",
+            "Name": "DetailsContainerSizer",
+            "Value": "1",
+            "Kind": "String"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Modules\\GlobalSettings\\Sizer",
+            "Name": "DetailsContainerSizer",
+            "Value": "0",
+            "Kind": "String"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Recent Search History",
+    "Category": "UI",
+    "Description": "Prevents File Explorer from remembering previous searches.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+            "Name": "SearchBoxSuggestions",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+            "Name": "SearchBoxSuggestions",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+{
+    "Name": "Disable Meet Now Button",
+    "Category": "UI",
+    "Description": "Removes the Meet Now button from the taskbar.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+            "Name": "HideSCAMeetNow",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+            "Name": "HideSCAMeetNow",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Taskbar Chat Icon",
+    "Category": "UI",
+    "Description": "Removes the Microsoft Teams Chat icon from the taskbar.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarMn",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+            "Name": "TaskbarMn",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Search Highlights",
+    "Category": "UI",
+    "Description": "Removes highlighted content and suggestions from Windows Search.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+            "Name": "IsDynamicSearchBoxEnabled",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+            "Name": "IsDynamicSearchBoxEnabled",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Windows Spotlight",
+    "Category": "UI",
+    "Description": "Disables Windows Spotlight lock screen recommendations.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "RotatingLockScreenEnabled",
+            "Value": 0,
+            "Kind": "DWord"
+        },
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "RotatingLockScreenOverlayEnabled",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "RotatingLockScreenEnabled",
+            "Value": 1,
+            "Kind": "DWord"
+        },
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "RotatingLockScreenOverlayEnabled",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Device Setup Suggestions",
+    "Category": "UI",
+    "Description": "Stops Windows from showing setup completion suggestions.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
+            "Name": "ScoobeSystemSettingEnabled",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\UserProfileEngagement",
+            "Name": "ScoobeSystemSettingEnabled",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Edge Startup Boost",
+    "Category": "UI",
+    "Description": "Prevents Microsoft Edge from staying loaded in the background.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+            "Name": "StartupBoostEnabled",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Edge",
+            "Name": "StartupBoostEnabled",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+},
+
+{
+    "Name": "Disable Windows Tips",
+    "Category": "UI",
+    "Description": "Disables Windows tips and suggestions shown throughout the system.",
+    "Reversible": true,
+    "RestartRequired": false,
+
+    "Actions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "SubscribedContent-338389Enabled",
+            "Value": 0,
+            "Kind": "DWord"
+        }
+    ],
+
+    "UndoActions": [
+        {
+            "Type": "Registry",
+            "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+            "Name": "SubscribedContent-338389Enabled",
+            "Value": 1,
+            "Kind": "DWord"
+        }
+    ]
+}
+]

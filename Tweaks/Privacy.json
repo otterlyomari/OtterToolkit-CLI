@@ -1,0 +1,224 @@
+[
+  {
+    "Name": "Disable Advertising ID",
+    "Category": "Privacy",
+    "Description": "Disables Windows advertising ID tracking used for personalized advertisements.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
+        "Name": "Enabled",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Diagnostic Telemetry",
+    "Category": "Privacy",
+    "Description": "Reduces Windows diagnostic data collection sent to Microsoft.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+        "Name": "AllowTelemetry",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Activity History",
+    "Category": "Privacy",
+    "Description": "Disables Windows activity history collection and synchronization.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "Name": "EnableActivityFeed",
+        "Value": 0,
+        "Kind": "DWord"
+      },
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "Name": "PublishUserActivities",
+        "Value": 0,
+        "Kind": "DWord"
+      },
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+        "Name": "UploadUserActivities",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Feedback Requests",
+    "Category": "Privacy",
+    "Description": "Stops Windows from periodically requesting user feedback.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Siuf\\Rules",
+        "Name": "NumberOfSIUFInPeriod",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Online Search Suggestions",
+    "Category": "Privacy",
+    "Description": "Disables web search suggestions from appearing in Windows Search.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Explorer",
+        "Name": "DisableSearchBoxSuggestions",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Cloud Content Suggestions",
+    "Category": "Privacy",
+    "Description": "Disables Windows cloud-powered suggestions and promotional content.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+        "Name": "DisableWindowsConsumerFeatures",
+        "Value": 1,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Suggested Apps",
+    "Category": "Privacy",
+    "Description": "Prevents Windows from automatically suggesting applications.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "Name": "SubscribedContent-338388Enabled",
+        "Value": 0,
+        "Kind": "DWord"
+      },
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+        "Name": "SubscribedContent-338389Enabled",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Tailored Experiences",
+    "Category": "Privacy",
+    "Description": "Prevents Windows from using diagnostic data for personalized experiences.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+        "Name": "TailoredExperiencesWithDiagnosticDataEnabled",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable App Launch Tracking",
+    "Category": "Privacy",
+    "Description": "Stops Windows from tracking application launches for recommendations.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        "Name": "Start_TrackProgs",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable File Explorer Recent Files Tracking",
+    "Category": "Privacy",
+    "Description": "Stops Windows from storing recently accessed files and folders.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+        "Name": "ShowRecent",
+        "Value": 0,
+        "Kind": "DWord"
+      },
+      {
+        "Type": "Registry",
+        "Path": "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+        "Name": "ShowFrequent",
+        "Value": 0,
+        "Kind": "DWord"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Location Tracking",
+    "Category": "Privacy",
+    "Description": "Disables Windows location services.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+        "Name": "Value",
+        "Value": "Deny",
+        "Kind": "String"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Camera Access",
+    "Category": "Privacy",
+    "Description": "Disables application access to the system camera.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\webcam",
+        "Name": "Value",
+        "Value": "Deny",
+        "Kind": "String"
+      }
+    ]
+  },
+
+  {
+    "Name": "Disable Microphone Access",
+    "Category": "Privacy",
+    "Description": "Disables application access to the system microphone.",
+    "Actions": [
+      {
+        "Type": "Registry",
+        "Path": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\microphone",
+        "Name": "Value",
+        "Value": "Deny",
+        "Kind": "String"
+      }
+    ]
+  }
+]
